@@ -1,9 +1,10 @@
-# Drug Response Prediction
-This project focuses on predicting drug response using machine learning techniques. The dataset is downloaded from the [GDSC1 dataset](https://tdcommons.ai/multi_pred_tasks/drugres), which contains information about drug responses in various cell lines (177,310 pairs, 958 cancer cells and 208 drugs).
+# TCR-Epitope Binding Affinity Prediction
+This project focuses on predicting whether an epitope binds to the TCR or not, given a epitope and a T-cell receptor using machine learning techniques. 
 
 ## Download a Dataset of Interest
-The dataset focuses on making accurations predictions on new set of drugs and cell-lines. It contains wet lab IC50 for different drugs (in form of SMILES) and 1000 cancer cell lines (in form of a RMD normalized gene expression)
-The goal is to predict Y, the log normalized IC50
+The dataset is downloaded from the [Weber dataset](https://tdcommons.ai/multi_pred_tasks/tcrepitope), and it contains amino acid sequences either for the entire TCR or only for the hypervariable CDR3 loop
+Originally, the dataset was imbalance, but was downsampled to a limit of 400 TCRs per epitope
+The goal is to make predictions as to whether an epitope binds to the TCR or not.
 
 ### Setup Instructions
 #### Prerequisites
@@ -22,7 +23,7 @@ The goal is to predict Y, the log normalized IC50
    ```bash
    jupyter lab
    ```
-4. Navigate to `notebook/notebooks/Drug Response Prediction.ipynb` and run the notebook
+2. Navigate to `notebook/notebooks/TCR-Epitope Binding Affinity Prediction.ipynb` and run the notebook
 
 #### Understanding the Project Workflow
 1. Download and Move the Dataset to `data\`
@@ -33,20 +34,11 @@ The goal is to predict Y, the log normalized IC50
 Usage:
 ```python
 from scripts.data_loader import DataDownloader
-data_downloader = DataDownloader()
-data, gdsc_df, gdsc_gene = data_downloader.fetch_gdsc1_dataset()
+downloader = DataDownloader()
+data, df = downloader.fetch_weber_dataset()
 ```
 
-2. Preprocess the Benchmark Data
-Here, the preprocessing script renames columns of the benchmark dataset and compares it with our original dataset to check if the benchmark dataframe is the same as the project dataset
-
-Usage:
-```python
-from scripts.preprocessor import Preprocessor
-preprocessor = Preprocessor(gdsc_df, benchmark_df)
-comparison_result = preprocessor.compare_dataframes()
-print(comparison_result)
-```
+2. Run the Notebook to view the results of the EDA
 
 ## Featuriser
-Awaiting Next Instructions
+Todo next...
