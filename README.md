@@ -26,19 +26,19 @@ The goal is to make predictions as to whether an epitope binds to the TCR or not
    ```
 
 ##### Method 2: Running The Notebook
-2. Launch Jupyter
+1. Launch Jupyter
    ```bash
    jupyter lab
    ```
 2. Navigate to `notebook/notebooks/TCR-Epitope Binding Affinity Prediction.ipynb` and run the notebook
 
 ##### Fix for WSL Users (If Matplotlib Crashes)  
-	If you encounter the `Qt platform plugin "xcb"` error, run the following commands:  
-	```bash
-	echo 'export QT_QPA_PLATFORM=offscreen' >> ~/.bashrc
-	source ~/.bashrc
-	```
-	This ensures that matplotlib runs in headless mode.
+If you encounter the Qt platform plugin "xcb" error, run the following commands:  
+```bash
+echo 'export QT_QPA_PLATFORM=offscreen' >> ~/.bashrc
+source ~/.bashrc
+```
+This ensures that matplotlib runs in headless mode.
 
 ## Featuriser
 Todo next...
