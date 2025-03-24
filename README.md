@@ -1,11 +1,12 @@
-# TDC - hERG blockers Prediction
-This project focuses on predicting whether an epitope binds to the TCR or not, given a epitope and a T-cell receptor using machine learning techniques. 
+# TDC - Toxicity Prediction Tasks (hERG blockers and AMES)
+Project 1. The overall task focuses on predicting the toxicity of drug molecules towards human organisms. Specifically, I will be focusing on hERG blockers which is to predict whether a drug blocks the human ether-à-go-go related gene (hERG).
+Project 2. This project is also under toxicity prediction task and its overall goal is on predicting whether a drug SMILES string is mutagenic or not.
 
 ## Download a Dataset of Interest
-The dataset is downloaded from the [herG blockers](https://tdcommons.ai/single_pred_tasks/tox/), 
-and it contains information about drugs. This information is represented by a SMILES string and a drug ID. It also contain a label `Y` which is either blocking (1) or not blocking (0). 
-The dataset includes 648 drugs, aiding in the assessment of cardiotoxicity risks and 
-the goal of the project is to make a binary classification as to whether a drug blocks the human ether-à-go-go related gene (hERG).
+Both datasets are downloaded from the [Toxicity Prediction](https://tdcommons.ai/single_pred_tasks/tox/), and they contains information about drugs. 
+This information is represented by a SMILES string and a drug ID. They also contain a label `Y` 
+For hERG: The label Y is either blocking (1) or not blocking (0). 
+For AMES: The label Y is either mutagens (1) or non mutagens (0). 
 
 ### Setup Instructions
 #### Prerequisites
@@ -32,21 +33,25 @@ the goal of the project is to make a binary classification as to whether a drug 
    ```bash
    python scripts/main.py
    ```
+   You'll get a prompt to enter a model name
+   
+   Fix for WSL Users (If Matplotlib Crashes)  
+   If you encounter the Qt platform plugin "xcb" error, run the following commands:  
+   ```bash
+   echo 'export QT_QPA_PLATFORM=offscreen' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+   This ensures that matplotlib runs in headless mode.
+
 
 2b. Method 2: Running The Notebook
 1. Launch Jupyter
    ```bash
    jupyter lab
    ```
-2. Navigate to `notebook/notebooks/TDC - hERG blockers.ipynb` and run the notebook
-
-3.  Fix for WSL Users (If Matplotlib Crashes)  
-If you encounter the Qt platform plugin "xcb" error, run the following commands:  
-```bash
-echo 'export QT_QPA_PLATFORM=offscreen' >> ~/.bashrc
-source ~/.bashrc
-```
-This ensures that matplotlib runs in headless mode.
+2. Navigate to `notebook/notebooks/TDC - Toxicity Prediction Task.ipynb`
+3. Enter a valid model name 
+4. Run the notebook
 
 ## Featuriser
 Todo next...

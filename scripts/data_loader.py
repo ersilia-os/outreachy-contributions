@@ -1,15 +1,13 @@
 import os
-import shutil
 import logging
 import pandas as pd
 from tdc.single_pred import Tox
 
 class DataDownloader:
-    def __init__(self, data_dir="data/"):
+    VALID_DATASETS = {"hERG", "hERG_Karim", "AMES", "DILI", "Skin Reaction", "LD50_Zhu", "Carcinogens_Lagunin", "ClinTox"}
+
+    def __init__(self, data_dir = "../data/"):
         self.data_dir = os.path.abspath(data_dir)
-        self.data_file = os.path.join(self.data_dir, "herg.csv")  # Save dataset here
-        self.data = None
-        self.herg_df = None
 
         # Set up logger
         self.logger = logging.getLogger(__name__)
@@ -18,31 +16,66 @@ class DataDownloader:
         handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
         self.logger.addHandler(handler)
 
-    def fetch_herg_dataset(self):
+    def fetch_dataset(self, name, method="scaffold"):
         """
-        Downloads the herg hERG blockers dataset, saves it as a CSV file, and returns the DataFrame.
+        Downloads the specified dataset, applies splitting, saves all splits as CSV, and returns the DataFrame.
+        
+        Args:
+        - name (str): Name of the dataset (must be in VALID_DATASETS).
+        - method (str): Splitting method ('random' or 'scaffold').
+        
+        Returns:
+        - data (Tox): The dataset object.
+        - df (pd.DataFrame): The full dataset DataFrame.
+        - splits (dict): Dictionary containing train, validation, and test DataFrames.
         """
         try:
-            # Ensure clean data directory
-            if os.path.exists(self.data_dir):
-                self.logger.info(f"Removing existing data directory: {self.data_dir}")
-                shutil.rmtree(self.data_dir)
-                
-            os.makedirs(self.data_dir, exist_ok=True)
+            if name not in self.VALID_DATASETS:
+                self.logger.error(f"Invalid dataset name '{name}'. Allowed names: {self.VALID_DATASETS}")
+                return None, None, None
+
+            if method not in ["random", "scaffold"]:
+                self.logger.error(f"Invalid split method '{method}'. Choose 'random' or 'scaffold'.")
+                return None, None, None
+
+            # Set dataset directory inside data_dir
+            dataset_dir = os.path.join(self.data_dir, name)
+            dataset_file = os.path.join(dataset_dir, f"{name}.csv")
+
+            os.makedirs(dataset_dir, exist_ok=True)
+
+            if os.path.exists(dataset_file):
+                self.logger.info(f"Deleting existing dataset file: {dataset_file}")
+                os.remove(dataset_file)
+
+            self.logger.info(f"Downloading '{name}' dataset...")
+            data = Tox(name=name, path=dataset_dir)
+            df = data.get_data()
+
+            df.to_csv(dataset_file, index=False)
+            self.logger.info(f"Dataset '{name}' saved to {dataset_file} (Shape: {df.shape})")
+
+            self.logger.info(f"Splitting dataset using '{method}' method...")
+            splits = data.get_split(method=method)
+
+            train = pd.DataFrame(splits["train"])
+            validation = pd.DataFrame(splits["valid"])
+            test = pd.DataFrame(splits["test"])
+
+            train.to_csv(os.path.join(dataset_dir, "train.csv"), index=False)
+            validation.to_csv(os.path.join(dataset_dir, "validation.csv"), index=False)
+            test.to_csv(os.path.join(dataset_dir, "test.csv"), index=False)
+
+            # Log split details
+            self.logger.info(f"Train set saved (Shape: {train.shape})")
+            self.logger.info(f"Validation set saved (Shape: {validation.shape})")
+            self.logger.info(f"Test set saved (Shape: {test.shape})")
+
+            return data, df, {"train": train, "validation": validation, "test": test}
             
-            self.logger.info("Downloading herg dataset...")
-            self.data = data = Tox(name = 'hERG', path = self.data_dir)
-            self.herg_df = self.data.get_data()
-            
-            # Save dataset as CSV
-            self.herg_df.to_csv(self.data_file, index=False)
-            self.logger.info(f"Dataset saved to {self.data_file} (Shape: {self.herg_df.shape})")
-            
-            return self.data, self.herg_df
         except Exception as e:
-            self.logger.error(f"Error: {e}", exc_info=True)
-            return None
+            self.logger.error(f"Error downloading '{name}': {e}", exc_info=True)
+            return None, None, None
 
 if __name__ == "__main__":
-    downloader = DataDownloader()
-    downloader.fetch_herg_dataset()
+    downloader = DataDownloader(data_dir = "../data/")
