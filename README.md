@@ -1,4 +1,4 @@
-# TCR-Epitope Binding Affinity Prediction
+# TDC - hERG blockers Prediction
 This project focuses on predicting whether an epitope binds to the TCR or not, given a epitope and a T-cell receptor using machine learning techniques. 
 
 ## Download a Dataset of Interest
