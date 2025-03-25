@@ -7,7 +7,7 @@ This Project aims to predict the ability of chemical compounds to cross the bloo
 - [Setup Instructions](#setup-instructions)  
   - [Prerequisites](#prerequisites)  
   - [Download and Installation](#download-and-installation)  
-- [Featurization](#featurization)  
+- [Featurisation](#featurisation)  
 - [Model Building](#model-building)  
 - [Model Evaluation](#model-evaluation)  
 - [Results and Analysis](#results-and-analysis)  
@@ -45,6 +45,35 @@ To successfully run this project, the following should be installed:
 
 To recreate this project, follow these steps:
 - Create a fork of this repository
-- Copy the link to the forked project from the green drop down button labelled code in your repository 
-  
+- Open the project repository in your local machine by cloning it:
+  ```bash
+      git clone https://github.com/your-username/your-repo.git
+      cd your-repo
+- Set up the conda environment
+  This project uses a conda environment to manage dependencies, create and activate all required dependencies by running:
+  ```bash
+      conda env create --file environment.yml
+      conda activate bbbp
+- Download the dataset (Already provided in the data folder):
+  The dataset is already split into train, test and valid data and saved as csv files in the data folder. it can be manually downloaded by running the `download_data.py` script
+  ```bash
+      python scripts/download_data.py
+      #this downloads the dataset from Therapeutics Data Commons and saves it in the data folder.
+
+## Featurisation  
+
+The downloaded dataset was featurised, i.e., converted from raw molecular data (SMILES notation) into a numerical representation that can be interpreted by machine learning models.  
+
+The featuriser used is the **RDKit Descriptor Model** from [Ersilia Model Hub](https://www.ersilia.io/model-hub).  
+
+### Steps to Featurise Data:
+- Fetch and serve the Ersilia model to be used:  
+   ```bash
+       ersilia fetch eos8a4x
+       ersilia serve eos8a4x
+- Run the featurisation script and save featurised data
+  ```bash
+      python scripts/featurisation.py
+
+This will featurise the split datasets and save the featurised data in the data folder.
  
