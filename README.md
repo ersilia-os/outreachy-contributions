@@ -1,13 +1,13 @@
-# Apply Ersilia Models to a modelling task
+## Apply Ersilia Models to a modelling task
 
-This involves three steps:
-- Download a dataset
-- Featurise the data
-- Build an ML model
+### Project steps:
+1. [Download a dataset](https://github.com/AzeematRaji/ersilia-outreachy/edit/main/README.md#download-a-dataset)
+1. [Featurise the data](https://github.com/AzeematRaji/ersilia-outreachy/edit/main/README.md#featurising-the-data)
+1. Build an ML model
 
 Setting the environment:
 
-### Prerequisites
+#### Prerequisites
 - linux OS
 - gcc compiler, `sudo apt install build-essential`
 - python 3.8 and above, [install here](https://www.python.org/).
@@ -17,58 +17,53 @@ Setting the environment:
 - gitlfs installed and activated, [Git LFS](https://git-lfs.github.com/)
 - docker installed, [Docker](https://docs.docker.com/engine/install/)
 
-### Installing Ersilia
+#### Installing Ersilia
 
 All the prerequisites must be satisfied. 
 
-- create a conda environment
+create a conda environment:
   
 `conda create -n ersilia python=3.12`
 
-- activate the environment
+activate the environment:
   
 `conda activate ersilia`
 
-- clone ersilia repo
+clone ersilia repo:
 ```
 git clone https://github.com/ersilia-os/ersilia.git
 cd ersilia
 ```
 
-- install with pip 
+install with pip:
+
 `pip install -e .`
 
-- confirm erisilia
+confirm erisilia:
 
 `ersilia --help`
 
-## Download a dataset
+### Download a dataset
 
-### Background of Data
+#### Background of Data
 
-This dataset falls under the Epitope domain within the Single prediction Problem category. It involves identifying the region on an antigen where an antibody can bind to trigger immune response. 
+__Dataset__: _Bioavailability, Ma et al._
 
-- Task Description: Prediction of amino acid token in the antigen's amino acid sequence, that is active in binding. This is a token-level classification
+Oral bioavailability is the fraction of an orally administered drug that reaches site of action in an unchanged form.
+It is influenced by factors like absorption, metabolism and solubility
 
-- Dataset size: 447 antigens
+__Task__: Given a drug ("SMILES"), predict the activity of bioavailability in Binary (0 or 1)
 
-**Data source and curation**
+- Bioavailable - 1 
+- Not Bioavailable - 0
 
-The dataset was originally sourced from Protein Data Bank (PDB), a storage archive for structural data of proteins and other biological molecules. Scientists and researchers deposit newly discovered protein structure to PDB, where the data undergoes different stages, including collection, processing and validation. PDB ensures data consistency across deposition centers, maintaining data uniformity. Once reviewed, data is made available to the scientific community and the public.
+__Size__: 640 drug molecules
 
-To curate this dataset, BepiPred, a web tool was used. It predicts B-cell epitope and non-epitope amino acids from biomolecules, using a random forest algorithm trained on real antibody-antigen structures. Curated Dataset is stored in The Data Commons (TDC).
+__Source__: TDC (Therapeutics Data Commons), a collection of curated datasets and tools to apply machine learning in drug discovery
 
-__Features__
-- X (Input): Amino acid sequence of an antigen 
-- Y (Output): A list of indices showing which amino acids in X are epitope
+#### Steps to downloading dataset from TDC
 
-__Endpoint__
-
-To produce a sequence-level prediction of epitope regions, helping researchers identify which parts of an antigen can trigger an immune response, which is of primary importance in vaccine and antibody development.
-
-### Stey by step to downloading dataset from TDC
-
-1- To retreive dataset from TDC, its python package has to be installed
+1- To retreive dataset from TDC, install its python package:
 
 `pip install pytdc` normal installation
 
@@ -76,25 +71,26 @@ To produce a sequence-level prediction of epitope regions, helping researchers i
 
 2- Using Notebook for an interactive session, can be found in notebooks/
 
+Set up notebook:
 - install jupyter notebook via conda `conda install -c conda-forge notebook` or
 - install jupyter notebook via pip `pip install notebook`
 - launch notebook from your root/ `jupyter notebook`
-- retrieve the dataset from TDC
+
+retrieve the dataset from TDC:
 ```
-from tdc.single_pred import Epitope
-data = Epitope(name = 'PDB_Jespersen')
+from tdc.single_pred import ADME
+data = ADME(name = 'Bioavailability_Ma')
 ```
-- laod the dataset, converts it to pandas Dataframe for handling structure data in python
+load the dataset in pandas Dataframe for handling structured data in python:
 
   `df = data.get_data()`
 
-- save dataset in multiple format in data/ to keep it organized, .pkl saves by default in the working directory
+save dataset in .csv format in data/ to keep it organized, .tab saves by default in the working directory
 ```
-df.to_csv("../data/raw_pdb_jesperson.csv", index=False)
-df.to_pickle("../data/pdb_jesperson.pkl")
+df.to_csv("../data/bioavailability.csv", index=False)
 ```
 
-- explore features and basic info about dataset
+explore features and basic info about dataset
 
 `df.head()  # to show the first 5 rows`
 
@@ -109,18 +105,45 @@ split = data.get_split()
 split.keys()  # splits are available
 ```
 
-- name and save notebook `data_handling.ipynb` in the notebooks/
+save notebook `data_handling.ipynb` in the notebooks/
 
 3- Using python scripts for automation and easily reproducible, this can be found in scripts/ 
 
-- to download, load and save dataset, the script can easily be run 
+to download, load and save dataset, the script can easily be run using:
 
-`python data_handling.py`
+`python ./scripts/data_handling.py`
 
 
-Finally, dataset has been successfully downloaded, loaded and saved into the data/, notebook saved in the notebooks/ and script saved in scripts/
+Dataset has been successfully downloaded, loaded and saved into the data/, notebook saved in the notebooks/ and script saved in scripts/.
 
-  
+### Featurising the data
+
+__Featuriser__: _Ersilia Compound Embeddings_ (eos2gw4)
+
+This is useful in predicting bioavailability, because it encodes chemical and bioactivity information of drug molecules not just the structure. Therefore providing comprehensive molecular representation and since bioavailability is influenced by chemical structure, physicochemical properties and biology activity, its better suited. Also it is pretrained on bioactive molecules from FS-Mol and chEMBL, which ensures it captures meaningful patterns from well-established datasets and similarities between drugs which make machine learning generalize better.
+
+#### Steps to featurise the data:
+
+Since the featuriser is a representation model from ersilia hub, and previously installed [ersilia](https://github.com/AzeematRaji/ersilia-outreachy/edit/main/README.md#installing-ersilia)
+
+1- fetch the model:
+
+`ersilia fetch eos2gw4`
+
+2- serve the model:
+
+`ersilia serve eos2gw4`
+
+3- run, passing the saved dataset as the input, specify the output in a file:
+
+`ersilia run -i ./data/bioavailabilty.csv -o ./data/featurised_bioavailability.csv`
+
+this will take your dataset and return a featurised dataset in the file specified.
+
+4- Using python scripts for automation and easily reproducible, can be found /scripts. run:
+`python ./scripts/bio_data_featurising.py`
+
+this will return a featurised dataset in the data/ successfully.
 
 
 
