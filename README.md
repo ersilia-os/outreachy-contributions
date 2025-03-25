@@ -115,7 +115,7 @@ python eda.py --file path/to/dataset.parquet --output output_directory/
 - `--file` (str, required): Path to the dataset file (CSV or Parquet).
 - `--output` (str, required): Directory to save EDA results.
 
-### Output Files
+#### Output Files
 - `eda_report.txt`: Summary of dataset properties.
 - `summary_statistics.csv`: Descriptive statistics.
 - `missing_values_heatmap.png`: Visualization of missing data.
