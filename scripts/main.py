@@ -1,6 +1,6 @@
 import os
 from data_loader import DataDownloader
-from eda import ExploratoryDataAnalysis
+from explore import ExploratoryDataAnalysis
 
 
 name = input("Model name: ")
@@ -11,13 +11,13 @@ downloader = DataDownloader()
 data, df, splits = downloader.fetch_dataset(name = name)
 
 print("\nDownloading data...")
-os.system("python scripts/data_loader.py")
+os.system("python data_loader.py")
 
 # Step 2: Perform EDA
 print("\nPerforming EDA...")
 eda = ExploratoryDataAnalysis(model_name = name)
 eda.generate_eda()
-os.system("python scripts/eda.py")
+os.system("python explore.py")
 
 # More Steps to be added
 

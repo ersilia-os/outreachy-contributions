@@ -10,7 +10,7 @@ matplotlib.use('Agg')  # This is correct for non-interactive backends
 import matplotlib.pyplot as plt
 
 class ExploratoryDataAnalysis:
-    def __init__(self, model_name, data_dir = "../data/", figure_base_dir = "../figures/"):
+    def __init__(self, model_name, data_dir = "../data/", figure_base_dir = "../data/figures/"):
         self.model_name = model_name
         self.data_path = os.path.join(data_dir, model_name, f"{model_name}.csv")
         self.figure_dir = os.path.join(figure_base_dir, model_name)  # Ensuring model-specific directory
@@ -55,6 +55,7 @@ class ExploratoryDataAnalysis:
                 plt.xlabel("Labels")
                 plt.ylabel("Count")
                 plt.title("Label Distribution")
+                plt.show()
 
                 fig_path = os.path.join(self.figure_dir, "label_distribution.png")
                 plt.savefig(fig_path)

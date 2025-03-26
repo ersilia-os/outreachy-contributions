@@ -25,7 +25,6 @@ class DataDownloader:
         - method (str): Splitting method ('random' or 'scaffold').
         
         Returns:
-        - data (Tox): The dataset object.
         - df (pd.DataFrame): The full dataset DataFrame.
         - splits (dict): Dictionary containing train, validation, and test DataFrames.
         """
@@ -71,11 +70,8 @@ class DataDownloader:
             self.logger.info(f"Validation set saved (Shape: {validation.shape})")
             self.logger.info(f"Test set saved (Shape: {test.shape})")
 
-            return data, df, {"train": train, "validation": validation, "test": test}
+            return df, {"train": train, "validation": validation, "test": test}
             
         except Exception as e:
             self.logger.error(f"Error downloading '{name}': {e}", exc_info=True)
-            return None, None, None
-
-if __name__ == "__main__":
-    downloader = DataDownloader(data_dir = "../data/")
+            return None, None
