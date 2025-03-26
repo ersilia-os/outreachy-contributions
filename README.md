@@ -17,3 +17,5 @@ The template repository already has pre-defined folders. Please restrict your pr
 - models: folder with model checkpoints
 
 Please modify this README to write your project documentation.
+
+<!-- pip install git+https://github.com/ersilia-os/compound-embedding-lite.git -->

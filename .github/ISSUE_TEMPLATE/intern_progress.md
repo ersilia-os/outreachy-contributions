@@ -1,5 +1,6 @@
 ---
 name: "Intern Project Progress"
+about: "Tracking internship contribution progress"
 title: "[Intern Progress] Your Name - Project Title"
 labels: ["intern-progress"]
 assignees: ""
