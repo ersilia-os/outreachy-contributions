@@ -35,17 +35,16 @@ memory usage: 15.5+ KB
 The missing values in the `Drug_ID` Column were filled by combining the pubchempy and rdkit libraries.
 I started by extracting the molecule formula from the SMILES. This was then used to find the chemical formula and by extension, the drug name.
 ```bash
-	smile = row["Drug"]
-	mol = Chem.MolFromSmiles(smile)
-	if mol:
-		formula = rdMolDescriptors.CalcMolFormula(mol)
-		try:
-			compounds = pcp.get_compounds(formula, 'formula')
-			if compounds:
-				name = compounds[0].synonyms[0] if compounds[0].synonyms else compounds[0].iupac_name
-			else:
-				name = formula  # Fallback to formula
-
+smile = row["Drug"]
+mol = Chem.MolFromSmiles(smile)
+if mol:
+	formula = rdMolDescriptors.CalcMolFormula(mol)
+	try:
+	compounds = pcp.get_compounds(formula, 'formula')
+	if compounds:
+		name = compounds[0].synonyms[0] if compounds[0].synonyms else compounds[0].iupac_name
+	else:
+		name = formula  # Fallback to formula
 ```
 
 The process was logged and the following is an extract from the log.
@@ -59,6 +58,7 @@ The process was logged and the following is an extract from the log.
 ```bash
 .
 ├── data/               # Raw and processed dataset files
+│   └── figures/        # Figures from EDA
 │   └── hERG/           # hERG-specific data
 │       ├── hERG.csv
 │       ├── herg.tab
@@ -68,14 +68,13 @@ The process was logged and the following is an extract from the log.
 │       ├── test_eos24ci_featurized.csv
 │       ├── train_eos24ci_featurized.csv
 │       └── validation_eos24ci_featurized.csv
-├── figures/            # Visualization outputs
-│   └── hERG/           # hERG-specific visualizations
 ├── models/             # Saved machine learning model checkpoints
 ├── notebooks/          # Jupyter notebooks for analysis
 │   └── TDC - Toxicity Prediction Task.ipynb
 ├── scripts/            # Python utility scripts
 │   ├── main.py
 │   ├── data_loader.py
+│   ├── data_processor.py
 │   ├── explore.py
 │   └── featurize.py
 ├── requirements.txt    # Project dependencies
@@ -121,7 +120,7 @@ python scripts/main.py
   source ~/.bashrc
   ```
 Expected actions and results are as follows:
-- This will automatically run `data_loader.py`, `explore.py` and `featurize.py` scripts
+- This will automatically run `data_loader.py`, `data_processor`, `explore.py` and `featurize.py` scripts
 - Load and download the dataset
 - Split the dataset into train, test and split
 - Perform Exploratory Data Analysis (display dataset summary and generate visualization stored in `data\figures\hERG`)
