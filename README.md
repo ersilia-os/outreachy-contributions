@@ -1,19 +1,26 @@
-# Outreachy contribution period
+# Drug-Drug Interaction Using XGBoost
+Drug-drug interactions 
+This project aims to create a machine learning model that can classify drug-drug interactions, given their `SMILES` input
 
-This repository contains a basic folder structure to be used during the Outreachy contribution period. Please make a fork to start contributing, and detail progress in the open issue. 
-
-## Project goals:
-- Understand how to use and interact with the Ersilia Model Hub
-- Demonstrate basic AI/ML knowledge
-- Show your Python coding skills 
-- Practice code documentation and end user documentation
+## Pre-requisites
+- Jupyter Notebook
 
 
-## Structure overview
-The template repository already has pre-defined folders. Please restrict your project to using them for easy review:
-- data: folder where data needs to be stored once downloade
-- notebooks: jupyter notebooks
-- scripts: python/bash scripts necessary to run the project
-- models: folder with model checkpoints
+## Installation/Steps to run project locally
+- Clone the repository `https://github.com/valentina-buoro/outreachy-contributions.git`
 
-Please modify this README to write your project documentation.
+
+## Development Workflow:
+- Pre-requisites for development were sucessfully installed
+- I explored the TDC dataset catalogue and selected a dataset for classification modelling
+- I wrote a python script that downloads the dataset and saves to the `/data` folder
+- The data was split into `train, valid and test` for training the machine learning model, carrying out cross validation of the model, and finally testing the model on new data.
+- I carried out basic Exploratory Data Analysis to have a better understanding of my dataset
+      - The Dataset has 4
+- I featurised the model using the *Morgan Fingerprints in binary form* `eos4wt0` from Ersilia Hub
+  `
+- 
+
+  
+
+
