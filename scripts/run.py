@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def setup_environment():
     """Quick dependency check and installer."""
-    required_packages = ['pytdc', 'pandas','matplotlib','seaborn']
+    required_packages = ['pytdc', 'pandas','matplotlib','seaborn','rdkit']
     
     for pkg in required_packages:
         try:
