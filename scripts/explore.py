@@ -70,6 +70,7 @@ class ExploratoryDataAnalysis:
                 smiles_length = df['Drug'].str.len()
                 sns.histplot(smiles_length, bins=20, kde=True)
                 plt.title("SMILES Length Distribution")
+                plt.show()
 
                 fig_path = os.path.join(self.figure_dir, "smiles_length.png")
                 plt.savefig(fig_path)
