@@ -24,7 +24,7 @@ if not (HTS_DATASET_NAME := os.environ.get("HTS_DATASET_NAME")):
 def load_tdc_hts_data(
     dataset_name: str,
     data_store_path: Path,
-    radom_split: bool = True,
+    radom_split: bool = False,
     print_dataset_stats=True,
 ) -> List:
     """Utility to retrieve TDC HTS single instance prediction data based on the specified dataset
@@ -36,7 +36,7 @@ def load_tdc_hts_data(
     Args:
         dataset_name (str): name of dataset from the TDC HTS single instance prediction problem \n
         data_store_path (Path): local directory path to store loaded dataset \n
-        radom_split (bool, optional): Option to split the data using random split or scaffold method. Defaults True \n
+        radom_split (bool, optional): Option to split the data using random split or scaffold method. Defaults False \n
         print_dataset_stats (bool, optional): Option to display basic dataset statictics after loading. Defaults to True. \n
     """
     try:

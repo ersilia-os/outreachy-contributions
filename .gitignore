@@ -174,4 +174,4 @@ cython_debug/
 .pypirc
 
 notebooks/test.ipynb
-Makefile
+# Makefile

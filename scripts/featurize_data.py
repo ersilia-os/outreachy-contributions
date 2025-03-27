@@ -17,6 +17,9 @@ logging.basicConfig(
 if not (LOCAL_DATA_PATH := os.environ.get("LOCAL_DATA_PATH")):
     raise ValueError("LOCAL_DATA_PATH environment variable is not set.")
 
+if not (SMILES_FEATURE_COLUMN := os.environ.get("SMILES_FEATURE_COLUMN")):
+    raise ValueError("SMILES_FEATURE_COLUMN environment variable is not set.")
+
 # init model once to avoid reloading for each dataframe record
 model = ErsiliaCompoundEmbeddings()
 
@@ -87,4 +90,4 @@ def preprocess_data(
 if __name__ == "__main__":
     for file_path in glob.glob(os.path.join(LOCAL_DATA_PATH + "/raw", "*.csv")):
         store_path = LOCAL_DATA_PATH + "/featurized"
-        preprocess_data(file_path, smiles_column="Drug", data_store_path=store_path)
+        preprocess_data(file_path, smiles_column=SMILES_FEATURE_COLUMN, data_store_path=store_path)
