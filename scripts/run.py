@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 import os
 import sys
 import logging
 import subprocess
 
-# Configure basic logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s: %(message)s',
@@ -17,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def setup_environment():
     """Quick dependency check and installer."""
-    required_packages = ['pytdc', 'pandas']
+    required_packages = ['pytdc', 'pandas','matplotlib','seaborn']
     
     for pkg in required_packages:
         try:
@@ -28,11 +26,11 @@ def setup_environment():
 
 def main():
     try:
-        # Set up environment
+        # Setting up environment
         logger.info("Starting ADME dataset download process")
         setup_environment()
         
-        # Import libraries
+        # Importing libraries
         import pandas as pd
         from tdc.single_pred import ADME
         
