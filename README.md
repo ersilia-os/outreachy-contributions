@@ -133,3 +133,56 @@ python eda.py --file path/to/dataset.parquet --output output_directory/
 - **Missing Values:** The dataset has minimal missing values, making it ready for modeling with little preprocessing.  
 
 - **Class Imbalance:** Some toxicity endpoints show class imbalance, requiring techniques like resampling or weighted loss functions.    
+
+
+## Featurization Script
+
+This part focuses on processing and featurizing the Tox21 dataset for downstream machine learning tasks. The dataset contains molecular structures in SMILES format, along with labels for toxicity prediction. This repository provides scripts to:
+
+1. Load and preprocess the Tox21_NR-AR dataset
+2. Generate molecular embeddings using the ErsiliaCompoundEmbeddings model
+3. Store the featurized dataset in Parquet format for efficient use
+
+The Tox21 dataset comprises 12 distinct toxicity assays, including nuclear receptor signaling (e.g., NR-AR, NR-AhR) and stress response pathways (e.g., SR-ARE). While specialized models like the Cardiotoxicity Classifier (eos1pu1) are optimized for hERG inhibition (a single endpoint), they lack generalizability across diverse toxicity mechanisms.
+
+- Compound Embeddings (eos2gw4), in contrast, provide task-agnostic molecular representations derived from:
+
+- ChEMBL bioactivity data (broad coverage of protein targets)
+- FS-Mol (few-shot learning benchmark for drug discovery)
+- Multi-descriptor fusion (Grover + Mordred + ECFP)
+
+This ensures that embeddings capture both structural and functional toxicity signals, making them suitable for all 12 Tox21 assays without bias toward a single endpoint.
+
+### Description
+The featurization script (`scripts/featuriser.py`) converts SMILES representations of molecules into numerical embeddings using the `ErsiliaCompoundEmbeddings` model.
+
+### Usage
+Run the script as follows:
+```bash
+python path/featuriser.py
+```
+### Workflow
+1. Load the dataset (`tox21_NR-AR.parquet`)
+2. Initialize the Ersilia compound embedding model
+3. Convert SMILES into embeddings in batches (memory-efficient processing)
+4. Save the processed dataset to `../output/Single/tox21_NR-AR_featurized.parquet`
+5. Run validation checks to ensure correctness
+
+### Expected Output
+A new Parquet file containing:
+- Original dataset columns
+- A new column `embedding` (1024-dimensional vector representation of each molecule)
+
+## Notebook Version
+For an interactive version of this workflow, refer to `notebooks/featurisation.ipynb`, which provides step-by-step execution and visualization.
+
+## Notes
+- Ensure the dataset path is correctly set before running the scripts.
+- Modify `batch_size` in `featurize_tox21.py` to optimize memory usage based on system capacity.
+
+## Acknowledgments
+This project utilizes the [Ersilia](https://ersilia.io/) model for molecular embeddings.
+
+## License
+MIT License. See `LICENSE` for details.
+
