@@ -1,0 +1,13 @@
+Dataset Info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 7265 entries, 0 to 7264
+Data columns (total 3 columns):
+ #   Column   Non-Null Count  Dtype  
+---  ------   --------------  -----  
+ 0   Drug_ID  7265 non-null   object 
+ 1   Drug     7265 non-null   object 
+ 2   Y        7265 non-null   float64
+dtypes: float64(1), object(2)
+memory usage: 170.4+ KB
+
+Duplicate Rows: 0
