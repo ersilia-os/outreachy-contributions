@@ -1,0 +1,44 @@
+{
+  "timestamp": "2025-03-25T22:15:31.246048",
+  "total_molecules": 910,
+  "successful_molecules": 910,
+  "success_rate": 1.0,
+  "splits": [
+    {
+      "split": "train",
+      "n_samples": 637,
+      "n_features": 2048,
+      "mean": 0.0334376839678179,
+      "std": 0.17977654257073203,
+      "min": 0.0,
+      "max": 1.0,
+      "n_zeros": 1260954,
+      "n_nan": 0,
+      "n_inf": 0
+    },
+    {
+      "split": "valid",
+      "n_samples": 91,
+      "n_features": 2048,
+      "mean": 0.031148051167582416,
+      "std": 0.17371773103527482,
+      "min": 0.0,
+      "max": 1.0,
+      "n_zeros": 180563,
+      "n_nan": 0,
+      "n_inf": 0
+    },
+    {
+      "split": "test",
+      "n_samples": 182,
+      "n_features": 2048,
+      "mean": 0.031075613839285716,
+      "std": 0.1735221025224087,
+      "min": 0.0,
+      "max": 1.0,
+      "n_zeros": 361153,
+      "n_nan": 0,
+      "n_inf": 0
+    }
+  ]
+}

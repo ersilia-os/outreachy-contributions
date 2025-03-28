@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-03-27T06:08:04.513853",
+  "total_molecules": 910,
+  "successful_molecules": 910,
+  "success_rate": 1.0,
+  "splits": [
+    {
+      "split": "train",
+      "n_samples": 637,
+      "n_features": 512,
+      "mean": 0.003951995001641381,
+      "std": 1.0985070935528123,
+      "min": -4.6574936,
+      "max": 4.454257,
+      "n_zeros": 0,
+      "pct_zeros": 0.0,
+      "n_nan": 0,
+      "pct_nan": 0.0,
+      "n_inf": 0,
+      "pct_inf": 0.0,
+      "sparsity": 0.0
+    },
+    {
+      "split": "valid",
+      "n_samples": 91,
+      "n_features": 512,
+      "mean": 0.0036683293601071205,
+      "std": 1.0986659326124681,
+      "min": -4.5599394,
+      "max": 4.387484,
+      "n_zeros": 0,
+      "pct_zeros": 0.0,
+      "n_nan": 0,
+      "pct_nan": 0.0,
+      "n_inf": 0,
+      "pct_inf": 0.0,
+      "sparsity": 0.0
+    },
+    {
+      "split": "test",
+      "n_samples": 182,
+      "n_features": 512,
+      "mean": 0.0037897978387048956,
+      "std": 1.0979468649243336,
+      "min": -4.5795593,
+      "max": 4.3834777,
+      "n_zeros": 0,
+      "pct_zeros": 0.0,
+      "n_nan": 0,
+      "pct_nan": 0.0,
+      "n_inf": 0,
+      "pct_inf": 0.0,
+      "sparsity": 0.0
+    }
+  ]
+}

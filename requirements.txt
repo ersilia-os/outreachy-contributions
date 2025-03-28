@@ -1,0 +1,10 @@
+PyTDC>=0.3.0
+pandas>=1.2.0
+numpy>=1.19.0
+ersilia>=0.1.42
+tqdm>=4.65.0
+matplotlib>=3.3.0
+scikit-learn>=0.24.0
+rdkit>=2023.9.1
+unimol>=0.1.0
+xgboost>=2.0.0
